@@ -1,14 +1,17 @@
 import express from "express";
+import { Router } from "express";
+import authRoute from "./src/routes/authRoute.js";
 
 const app = express();
+
+app.use(express.json())
+
+app.use('/auth', authRoute);
+
 
 app.get('/', (req, res) => {
   res.send("Hello World");
 })
-
-// Middleware
-
-// Routes
 
 // Error Handlers
 
