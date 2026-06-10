@@ -9,11 +9,14 @@ export const registerUser =  async (req, res) => {
     } = req.body;
 
     const result = await registerService({ username, displayName, email, password });
-    if(result.success){
-      res.status(200).json(result.message);
+
+    if(result.status){
+      res.status(201).json(result);
+    } else {
+      return res.status(400).json({ message: result.message }); 
     }
   }catch(err) {
-    res.send("Internal Server Error");
+    res.status(500).send("Internal Server Error");
   }
   
 }

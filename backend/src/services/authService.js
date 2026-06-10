@@ -3,6 +3,9 @@ import { hashPassword } from "../utils/password.js";
 
 export const registerService = async ({username, displayName, email, password}) => {
     try {
+      username = username.toLowerCase().trim();
+      email = email.toLowerCase().trim();
+      displayName = displayName.trim();
       const existingUser = await db.User.findFirst
         ({
           where: {
@@ -12,6 +15,7 @@ export const registerService = async ({username, displayName, email, password}) 
             ]
           }
         });
+
       if(existingUser){
         if(existingUser.username === username) {
           return {
@@ -39,6 +43,7 @@ export const registerService = async ({username, displayName, email, password}) 
       })
 
       const safeData = { 
+        id: user.id,
         username: user.username,
         displayName: user.displayName,
         email: user.email
