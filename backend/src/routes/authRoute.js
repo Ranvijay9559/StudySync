@@ -1,10 +1,10 @@
 import express from "express";
-import { registerUser } from "../controllers/authController.js";
-import { validateUser } from "../middleware/validation.js";
+import { loginUser, registerUser } from "../controllers/authController.js";
+import { validateLogin, validateRegister } from "../middleware/validation.js";
 
 const router = express.Router();
 
-router.post('/register', validateUser, registerUser);
-console.log("authroute.js");
+router.post('/register', validateRegister, registerUser);
+router.post('/login', validateLogin, loginUser);
 
 export default router;
