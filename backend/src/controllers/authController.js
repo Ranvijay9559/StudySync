@@ -1,4 +1,4 @@
-import { registerService, loginService } from "../services/authService.js"
+import { registerService, loginService, getCurrentUser } from "../services/authService.js"
 import { generateAccessToken } from "../utils/jwt.js";
 
 export const registerUser =  async (req, res) => {
@@ -37,5 +37,27 @@ export const loginUser = async (req, res) => {
   }catch(error){
     console.error(error)
     return res.status(500).send("Internal Server Error");
+  }
+}
+
+export const currentUser = async (req, res) => {
+  try {
+    const result = await getCurrentUser(req.user.id);
+
+    if (!result.status) {
+      return res.status(404).json({
+        message: result.message
+      });
+    }
+
+    return res.status(200).json({
+      message: result.message, 
+      data: result.data 
+    });
+  }catch(error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error"
+    });
   }
 }

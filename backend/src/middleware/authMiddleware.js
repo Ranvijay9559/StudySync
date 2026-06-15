@@ -1,4 +1,4 @@
-import { verifyAccessToken } from "../utils/jwt";
+import { verifyAccessToken } from "../utils/jwt.js";
 
 export const isAuthenticated = (req, res, next) => {
   const { authorization } = req.headers;

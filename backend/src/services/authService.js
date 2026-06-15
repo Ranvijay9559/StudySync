@@ -1,6 +1,7 @@
 import { response } from "express";
 import db from "../utils/db.js"
 import { comparePassword, hashPassword } from "../utils/password.js";
+import { generateAccessToken } from "../utils/jwt.js";
 
 export const registerService = async ({username, displayName, email, password}) => {
   try {
@@ -110,6 +111,39 @@ export const loginService = async ({ identifier, password }) => {
       }
     };
   } catch(error){
+    console.error(error);
+    return {
+      status: false,
+      message: "Internal Server Error"
+    }
+  }
+}
+
+export const getCurrentUser = async (id) => {
+  try {
+    const existingUser = await db.User.findUnique({
+      where: { id: id },
+      select: {
+        id: true,
+        username: true,
+        displayName: true,
+        email: true
+      }
+    });
+
+    if(!existingUser){
+      return {
+        status: false,
+        message: "Invalid User"
+      }
+    }
+
+    return {
+      status: true,
+      message: "Authenticated User",
+      data: existingUser
+    };
+  } catch (error) {
     console.error(error);
     return {
       status: false,
