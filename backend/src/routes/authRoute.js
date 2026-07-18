@@ -5,6 +5,8 @@ import { isAuthenticated } from "../middleware/authMiddleware.js";
 import { updateUser } from "../controllers/updateUserController.js";
 import { validateUpdate } from "../middleware/validateUpdateUser.js";
 import { deleteUser } from "../controllers/deleteUserController.js";
+import { validateChangePassword } from "../middleware/validateChangePassword.js";
+import { changePassword } from "../controllers/changePasswordController.js";
 
 const router = express.Router();
 
@@ -13,5 +15,6 @@ router.post('/login', validateLogin, loginUser);
 router.get('/me', isAuthenticated, currentUser);
 router.patch('/me', isAuthenticated, validateUpdate, updateUser);
 router.delete('/me', isAuthenticated, deleteUser);
+router.patch('/change-password', isAuthenticated, validateChangePassword, changePassword);
 
 export default router;

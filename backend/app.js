@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json())
 
-app.use('/auth', authRoute);
+app.use('/api/auth', authRoute);
 
 
 app.get('/', (req, res) => {
